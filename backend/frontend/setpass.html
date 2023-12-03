@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reset Password</title>
+  </head>
+  <body>
+    <div>
+      <form onsubmit="return checks(event)">
+        <div>
+          <label for="password">Enter new Password</label> <br />
+          <input type="text" id="password" name="password" required />
+          <input type="hidden" name="uuid" value="<%= uuidd %>" />
+          <button type="submit">submit</button>
+        </div>
+      </form>
+    </div>
+    <script
+      nonce="your-random-nonce"
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    ></script>
+
+    <script>
+      async function checks(event) {
+        event.preventDefault();
+        const password = document.getElementById("password").value;
+        const uuid = document.getElementsByName("uuid")[0].value;
+        const obj = {
+          password,
+          uuid,
+        };
+        try {
+          await axios.post(
+            "http://localhost:4000/password/changingpasswd",
+            obj
+          );
+          alert("password successfully changed");
+          console.log("changed");
+        } catch (err) {
+          console.log(err, "err");
+          alert("invalid link");
+        }
+      }
+    </script>
+  </body>
+</html>
